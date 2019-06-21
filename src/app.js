@@ -1,16 +1,15 @@
-import React from 'react';
-import {createGlobalStyle} from 'styled-components';
-import {hot} from 'react-hot-loader/root';
+import React from 'react'
+import { createGlobalStyle } from 'styled-components'
+import { hot } from 'react-hot-loader/root'
 
 // Import modern-normalize & fonts
-import 'modern-normalize/modern-normalize.css';
-import woff2 from '../public/fonts/open-sans-v16-latin-regular.woff2';
-import woff from '../public/fonts/open-sans-v16-latin-regular.woff';
+import 'modern-normalize/modern-normalize.css'
+import woff2 from '../public/fonts/open-sans-v16-latin-regular.woff2'
+import woff from '../public/fonts/open-sans-v16-latin-regular.woff'
 
 // Import Components
-import Container from './components/container';
-import Header from './components/header';
-import Counter from './components/counter';
+import Container from './components/container'
+import Header from './components/header'
 
 // Global Style
 const GlobalStyle = createGlobalStyle`
@@ -34,29 +33,37 @@ const GlobalStyle = createGlobalStyle`
     text-rendering: optimizeSpeed;
     word-wrap: break-word
   }
-`;
+`
 
 // Main page
-const App = () => {
+class App extends React.Component {
+  registerServiceWorker () {
 	// Register service worker
 	if ('serviceWorker' in navigator) {
 		window.addEventListener('load', () => {
-			navigator.serviceWorker.register('/sw.js').then(registration => {
-				console.log('SW registered:', registration);
-			}).catch(error => {
-				console.log('SW registration failed:', error);
-			});
-		});
+        navigator.serviceWorker
+          .register('/sw.js')
+          .then(registration => {
+            console.log('SW registered:', registration)
+          })
+          .catch(error => {
+            console.log('SW registration failed:', error)
+          })
+      })
+    }
 	}
+
+  render () {
+    // Register service worker
+    this.registerServiceWorker()
 
 	return (
 		<Container>
-			<Header>Hello World ⚡</Header>
-			<p>Example site using Styled React Boilerplate!</p>
-			<Counter/>
-			<GlobalStyle/>
+          <Header>Seating Planner</Header>
+          <GlobalStyle />
 		</Container>
-	);
-};
+    )
+  }
+}
 
-export default hot(App);
+export default hot(App)
